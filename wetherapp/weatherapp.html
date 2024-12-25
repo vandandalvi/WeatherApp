@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="card">
+        <div class="search">
+            <input class="search1" type="text" placeholder="Search" spellcheck="false">
+            <button class="img">
+                <img src="free-search-icon-2911-thumb.png" height="25">
+            </button>
+        </div>
+        <div class="weather">
+            <img src="pws-watcher-personal-weathe-logo-Photoroom.png">
+            <h1 class="temp">24°C</h1>
+            <h1 class="city">Mumbai</h1>
+            <div class="details">
+                <div class="col">
+                    <img src="wind.png" alt="Wind Icon">
+                    <div>
+                        <p class="wind">1.5 km/h</p>
+                        <p>Wind Speed</p>
+                    </div>
+                </div>
+                <div class="col2">
+                    <img src="humidity.png (1).png">
+                    <div>
+                        <p class="humidity">57%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+            </div>
+            <div class="details">
+                <div class="col">
+                    <img src="visibility2.png" alt="Wind Icon">
+                    <div>
+                        <p class="visibility">2500 km</p>
+                        <p>visibility</p>
+                    </div>
+                </div>
+                <div class="col2">
+                    <img src="feelslike2.png">
+                    <div>
+                        <p class="feelslike">24°C</p>
+                        <p>feelslike</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <script>
+        const apiKey = "74cbcf0039410cd70b2a7adcc4f0bbb1";
+        const apiurl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+    
+        let search1 = document.querySelector(".search1"); // Select the search input
+        let searchimg = document.querySelector(".img");  // Select the search button
+    
+        async function checkWeather(city) {
+            
+            
+                const response = await fetch(`${apiurl}${city}&appid=${apiKey}`);
+                
+    
+                const data = await response.json(); // Parse the JSON response
+                console.log(data);
+    
+                // Update weather information in the DOM
+                document.querySelector(".city").innerHTML = data.name;
+                document.querySelector(".temp").innerHTML = `${Math.round(data.main.temp)}°C`;
+                document.querySelector(".wind").innerHTML = `${data.wind.speed} km/h`;
+                document.querySelector(".humidity").innerHTML = `${data.main.humidity}%`;
+                document.querySelector(".visibility").innerHTML = `${Math.round(data.visibility)} m`;
+                document.querySelector(".feelslike").innerHTML = `${Math.round(data.main.feels_like)}°C`;
+            } 
+              
+              
+            
+    
+      
+        searchimg.addEventListener("click", () => {
+            const city = search1.value.trim(); // Remove any extra spaces
+            if (city === "") {
+                alert("Please enter a city name.");
+            } else {
+                checkWeather(city);
+            }
+        });
+    </script>
+    
+    
+</body>
+
+</html>
